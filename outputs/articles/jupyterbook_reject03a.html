@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+   
+   
+  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jupyter本没原稿集#2.2 ipywidgets#2 - drillerの部屋</title>
+  
+
+
+<!-- include docutils5 css -->
+<link rel="stylesheet" href="../static/docutils_html5/minimal.css">
+  <link rel="stylesheet" href="../static/docutils_html5/plain.css">
+
+<!-- include pygments css -->
+<link rel="stylesheet" href="../static/pygments/default.css">
+
+<!-- include boolstrap4 -->
+<link rel="stylesheet" href="../static/bootstrap4/bootstrap.min.css">
+
+<!-- include jquery.js -->
+<script src="../static/jquery/jquery.min.js"></script>
+
+<!-- include popper.js -->
+<script src="../static/popper.js/popper.min.js"></script>
+
+<!-- include boolstrap4 js -->
+<script src="../static/bootstrap4/bootstrap.min.js"></script>
+
+<!-- include font awesome -->
+<script defer src="../static/fontawesome/js/all.min.js"></script>
+  <script defer src="../static/fontawesome/js/v4-shims.min.js"></script>
+
+<!-- include ipynb minimum style -->
+<link rel="stylesheet" href="../static/ipynb/styles/min_ipynb.css">
+
+<link rel="stylesheet" href="../static/css/sample_index_pagenation.css">
+<link href="../static/newblog/ipynb_styles.css" rel="stylesheet">
+
+<!-- Loading mathjax macro -->
+<!-- Load mathjax -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML"></script>
+<!-- MathJax configuration -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+    // Center justify equations in code and markdown cells. Elsewhere
+    // we use CSS to left justify single line equations in code cells.
+    displayAlign: 'center',
+    "HTML-CSS": {
+        styles: {'.MathJax_Display': {"margin": 0}},
+        linebreaks: { automatic: true }
+    }
+});
+</script>
+
+<link rel="stylesheet" href="../static/newblog/main.css">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../static/amx004.png">
+
+
+<link href="https://drillan.github.io/all.atom.xml" type="application/atom+xml" rel="alternate" title="drillerの部屋 Atom Feed" />
+<link href="https://drillan.github.io/channews.rdf" type="application/rss+xml" rel="alternate" title="drillerの部屋 RSS Feed" />
+
+<meta property="og:url" content="https://drillan.github.io/articles/jupyterbook_reject03a.html" />
+<meta property="og:locale" content="ja" />
+<meta property="og:type" content="article" />
+
+<meta property="og:title" content="Jupyter本没原稿集#2.2 ipywidgets#2 - drillerの部屋" />
+
+<meta name="description" content="どりらんの落書き帳"/>
+<meta property="og:description" content="どりらんの落書き帳" />
+<meta property="og:image" content="https://drillan.github.io/static/amx004.png" />
+<meta property="article:published_time" content="2018-01-19T00:00:00+09:00" />
+
+
+
+
+  <style>
+    .topblock {
+      background-color: #f5f5f5;
+    }
+
+    .topblock h1 {
+      color: #0f0f0f;
+    }
+
+    .navbar {
+      background-color: #6E777C !important;
+    }
+  </style>
+
+</head>
+
+<body>
+   
+<div>
+
+
+<div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="../index.html"
+      >
+      
+        <img src="../static/amx004.png" width="32" height="32"/>
+      
+      drillerの部屋 </a
+    >
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link" href="../about.html">このサイトについて</a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+ 
+
+
+
+<div class="container article_container">
+  <div class="row">
+    <div class="col-md-9">
+
+      
+      <div class="article">
+        
+        <div class="article_title">
+          <h1>
+            Jupyter本没原稿集#2.2 ipywidgets#2
+          </h1>
+        </div>
+        
+
+        <div class="article_body">
+          <div class="line-block">
+<div class="line">ボツネタ供養の第三弾です。<a class="reference external" href="https://drillan.github.io/articles/jupyterbook_reject02.html">前回</a>から大分間が空いてしまいました。申し訳ありません...</div>
+<div class="line">今回は残りすべてのウィジェットを紹介します。</div>
+</div>
+<div class="section" id="togglebutton">
+<h1 class="md_header_block" id="h_articles_jupyterbook_reject03a_rst_ToggleButton">ToggleButton</h1>
+<p>トグルボタンです。ボタンをクリックすると真偽値が切り替わり、状態が保持されます。以下のコードでは2つの値の論理積を出力しています。</p>
+<pre class="code python literal-block"><code><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">ToggleButton</span>
+
+
+<span class="k">def</span> <span class="nf">x_and_y</span><span class="p">(</span><span class="n">change</span><span class="p">):</span>
+    <span class="n">clear_output</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">toggle_button_x</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">toggle_button_y</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+
+<span class="n">toggle_button_x</span> <span class="o">=</span> <span class="n">ToggleButton</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">'x'</span><span class="p">)</span>
+<span class="n">toggle_button_y</span> <span class="o">=</span> <span class="n">ToggleButton</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">'y'</span><span class="p">)</span>
+<span class="n">toggle_button_x</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">x_and_y</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">'value'</span><span class="p">)</span>
+<span class="n">toggle_button_y</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">x_and_y</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">'value'</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">toggle_button_x</span><span class="p">,</span> <span class="n">toggle_button_y</span><span class="p">)</span></code></pre>
+<div class="figure">
+<img alt="ToggleButton のサンプルコード" src="./img/ToggleButton-sample-out.png"/>
+<p class="caption">ToggleButton のサンプルコード</p>
+</div>
+</div>
+<div class="section" id="checkbox">
+<h1 class="md_header_block" id="h_articles_jupyterbook_reject03a_rst_Checkbox">Checkbox</h1>
+<p>チェックボックスです。チェックをした状態が
+<span class="docutils literal">True</span>、チェックを外した状態が <span class="docutils literal">Fales</span>
+となります。以下のコードでは2つの値の論理積を出力しています。</p>
+<pre class="code python literal-block"><code><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">Checkbox</span>
+
+
+<span class="k">def</span> <span class="nf">x_and_y</span><span class="p">(</span><span class="n">change</span><span class="p">):</span>
+    <span class="n">clear_output</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">checkbox_x</span><span class="o">.</span><span class="n">value</span> <span class="o">&amp;</span> <span class="n">checkbox_y</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+
+<span class="n">checkbox_x</span> <span class="o">=</span> <span class="n">Checkbox</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">'x'</span><span class="p">)</span>
+<span class="n">checkbox_y</span> <span class="o">=</span> <span class="n">Checkbox</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">'y'</span><span class="p">)</span>
+<span class="n">checkbox_x</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">x_and_y</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">'value'</span><span class="p">)</span>
+<span class="n">checkbox_y</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">x_and_y</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">'value'</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">checkbox_x</span><span class="p">,</span> <span class="n">checkbox_y</span><span class="p">)</span></code></pre>
+<div class="figure">
+<img alt="Checkbox のサンプルコード" src="./img/Checkbox-sample-out.png"/>
+<p class="caption">Checkbox のサンプルコード</p>
+</div>
+</div>
+<div class="section" id="valid">
+<h1 class="md_header_block" id="h_articles_jupyterbook_reject03a_rst_Valid">Valid</h1>
+<p>真偽値の状態を示すインジケータです。このインスタンスに対して変更はできません。</p>
+<pre class="code python literal-block"><code><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">Valid</span>
+
+
+<span class="k">def</span> <span class="nf">is_valid</span><span class="p">(</span><span class="n">change</span><span class="p">):</span>
+    <span class="n">valid</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">change</span><span class="p">[</span><span class="s1">'new'</span><span class="p">]</span>
+
+
+<span class="n">checkbox_valid</span> <span class="o">=</span> <span class="n">Checkbox</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">'valid'</span><span class="p">)</span>
+<span class="n">valid</span> <span class="o">=</span> <span class="n">Valid</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">checkbox_valid</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">is_valid</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">'value'</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">checkbox_valid</span><span class="p">,</span> <span class="n">valid</span><span class="p">)</span></code></pre>
+<div class="figure">
+<img alt="widgets\_name のサンプルコード" src="./img/widgets_name-sample-out.png"/>
+<p class="caption">widgets_name のサンプルコード</p>
+</div>
+</div>
+<div class="section" id="dropdown">
+<h1 class="md_header_block" id="h_articles_jupyterbook_reject03a_rst_Dropdown">Dropdown</h1>
+<p>ドロップダウンから値を選択します。以下のコードはキャラクター名を選択するとそのキャラクターの正体が出力されます。</p>
+<pre class="code python literal-block"><code><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">Dropdown</span>
+
+
+<span class="k">def</span> <span class="nf">sos</span><span class="p">(</span><span class="n">change</span><span class="p">):</span>
+    <span class="n">clear_output</span><span class="p">()</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'朝比奈'</span><span class="p">:</span> <span class="s1">'未来人'</span><span class="p">,</span> <span class="s1">'長門'</span><span class="p">:</span> <span class="s1">'宇宙人'</span><span class="p">,</span> <span class="s1">'古泉'</span><span class="p">:</span> <span class="s1">'超能力者'</span><span class="p">}</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ans</span><span class="p">[</span><span class="n">change</span><span class="p">[</span><span class="s1">'new'</span><span class="p">]])</span>
+
+
+<span class="n">dropdown</span> <span class="o">=</span> <span class="n">Dropdown</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">'朝比奈'</span><span class="p">,</span> <span class="s1">'長門'</span><span class="p">,</span> <span class="s1">'古泉'</span><span class="p">])</span>
+<span class="n">dropdown</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">sos</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">'value'</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">dropdown</span><span class="p">)</span></code></pre>
+<div class="figure">
+<img alt="Dropdown のサンプルコード" src="./img/Dropdown-sample-out.png"/>
+<p class="caption">Dropdown のサンプルコード</p>
+</div>
+</div>
+<div class="section" id="radiobuttons">
+<h1 class="md_header_block" id="h_articles_jupyterbook_reject03a_rst_RadioButtons">RadioButtons</h1>
+<p>ラジオボタンから値を選択します。以下のコードはキャラクター名を選択するとそのキャラクターの正体が出力されます。</p>
+<pre class="code python literal-block"><code><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">RadioButtons</span>
+
+<span class="n">radio_buttons</span> <span class="o">=</span> <span class="n">RadioButtons</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">'朝比奈'</span><span class="p">,</span> <span class="s1">'長門'</span><span class="p">,</span> <span class="s1">'古泉'</span><span class="p">])</span>
+<span class="n">radio_buttons</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">sos</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">'value'</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">radio_buttons</span><span class="p">)</span></code></pre>
+<div class="figure">
+<img alt="Dropdown のサンプルコード" src="./img/RadioButtons-sample-out.png"/>
+<p class="caption">Dropdown のサンプルコード</p>
+</div>
+</div>
+<div class="section" id="select">
+<h1 class="md_header_block" id="h_articles_jupyterbook_reject03a_rst_Select">Select</h1>
+<p>リストボックスから値を選択します。以下のコードはキャラクター名を選択するとそのキャラクターの正体が出力されます。</p>
+<pre class="code python literal-block"><code><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">Select</span>
+
+<span class="n">select</span> <span class="o">=</span> <span class="n">Select</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">'朝比奈'</span><span class="p">,</span> <span class="s1">'長門'</span><span class="p">,</span> <span class="s1">'古泉'</span><span class="p">])</span>
+<span class="n">select</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">sos</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">'value'</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">select</span><span class="p">)</span></code></pre>
+<div class="figure">
+<img alt="Select のサンプルコード" src="./img/Select-sample-out.png"/>
+<p class="caption">Select のサンプルコード</p>
+</div>
+</div>
+<div class="section" id="selectionslider">
+<h1 class="md_header_block" id="h_articles_jupyterbook_reject03a_rst_SelectionSlider">SelectionSlider</h1>
+<p>スライダから値を選択します。以下のコードはキャラクター名を選択するとそのキャラクターの正体が出力されます。</p>
+<pre class="code python literal-block"><code><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">SelectionSlider</span>
+
+<span class="n">selection_slider</span> <span class="o">=</span> <span class="n">SelectionSlider</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">'朝比奈'</span><span class="p">,</span> <span class="s1">'長門'</span><span class="p">,</span> <span class="s1">'古泉'</span><span class="p">])</span>
+<span class="n">selection_slider</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">sos</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">'value'</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">selection_slider</span><span class="p">)</span></code></pre>
+<div class="figure">
+<img alt="SelectionSlider のサンプルコード" src="./img/SelectionSlider-sample-out.png"/>
+<p class="caption">SelectionSlider のサンプルコード</p>
+</div>
+</div>
+<div class="section" id="togglebuttons">
+<h1 class="md_header_block" id="h_articles_jupyterbook_reject03a_rst_ToggleButtons">ToggleButtons</h1>
+<p>トグルボタンから値を選択します。以下のコードはキャラクター名を選択するとそのキャラクターの正体が出力されます。</p>
+<pre class="code python literal-block"><code><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">ToggleButtons</span>
+
+<span class="n">toggle_buttons</span> <span class="o">=</span> <span class="n">ToggleButtons</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">'朝比奈'</span><span class="p">,</span> <span class="s1">'長門'</span><span class="p">,</span> <span class="s1">'古泉'</span><span class="p">])</span>
+<span class="n">toggle_buttons</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">sos</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">'value'</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">toggle_buttons</span><span class="p">)</span></code></pre>
+<div class="figure">
+<img alt="ToggleButtons のサンプルコード" src="./img/ToggleButtons-sample-out.png"/>
+<p class="caption">ToggleButtons のサンプルコード</p>
+</div>
+</div>
+<div class="section" id="selectmultiple">
+<h1 class="md_header_block" id="h_articles_jupyterbook_reject03a_rst_SelectMultiple">SelectMultiple</h1>
+<p><span class="docutils literal">Ctrl</span> キーまたは <span class="docutils literal">Shift</span>
+キーを押しながら複数の値を選択できます。以下のコードは定義した辞書から組み合わせに応じた結果が出力されます。</p>
+<pre class="code python literal-block"><code><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">SelectMultiple</span>
+
+
+<span class="k">def</span> <span class="nf">relation</span><span class="p">(</span><span class="n">change</span><span class="p">):</span>
+    <span class="n">clear_output</span><span class="p">()</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="p">{(</span><span class="s1">'岡部倫太郎'</span><span class="p">,):</span> <span class="s1">'鳳凰院凶真'</span><span class="p">,</span> <span class="p">(</span><span class="s1">'阿万音鈴羽'</span><span class="p">,):</span> <span class="s1">'未来人'</span><span class="p">,</span> <span class="p">(</span><span class="s1">'橋田至'</span><span class="p">,):</span> <span class="s1">'スーパーハカー'</span><span class="p">,</span>
+           <span class="p">(</span><span class="s1">'岡部倫太郎'</span><span class="p">,</span> <span class="s1">'阿万音鈴羽'</span><span class="p">):</span> <span class="s1">'バイト戦士'</span><span class="p">,</span> <span class="p">(</span><span class="s1">'岡部倫太郎'</span><span class="p">,</span> <span class="s1">'橋田至'</span><span class="p">):</span> <span class="s1">'ダル'</span><span class="p">,</span>
+          <span class="p">(</span><span class="s1">'阿万音鈴羽'</span><span class="p">,</span> <span class="s1">'橋田至'</span><span class="p">):</span> <span class="s1">'親子'</span><span class="p">,</span> <span class="p">(</span><span class="s1">'岡部倫太郎'</span><span class="p">,</span> <span class="s1">'阿万音鈴羽'</span><span class="p">,</span> <span class="s1">'橋田至'</span><span class="p">):</span> <span class="s1">'ラボメン'</span><span class="p">}</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ans</span><span class="p">[</span><span class="n">change</span><span class="p">[</span><span class="s1">'new'</span><span class="p">]])</span>
+
+
+<span class="n">select_multiple</span> <span class="o">=</span> <span class="n">SelectMultiple</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">'岡部倫太郎'</span><span class="p">,</span> <span class="s1">'阿万音鈴羽'</span><span class="p">,</span> <span class="s1">'橋田至'</span><span class="p">])</span>
+<span class="n">select_multiple</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">relation</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">'value'</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">select_multiple</span><span class="p">)</span></code></pre>
+<div class="figure">
+<img alt="SelectMultiple のサンプルコード" src="./img/SelectMultiple-sample-out.png"/>
+<p class="caption">SelectMultiple のサンプルコード</p>
+</div>
+</div>
+<div class="section" id="text">
+<h1 class="md_header_block" id="h_articles_jupyterbook_reject03a_rst_Text">Text</h1>
+<p>テキストボックスです。以下のコードでは入力した文字列を式として評価した結果を出力します。<span class="docutils literal">.on_submit()</span>
+メソッドはテキストボックス上で <span class="docutils literal">Enter</span>
+キーが入力されたイベントをハンドリングします。</p>
+<pre class="code python literal-block"><code><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">Text</span>
+
+<span class="k">def</span> <span class="nf">calc</span><span class="p">(</span><span class="n">submit</span><span class="p">):</span>
+    <span class="n">clear_output</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="n">submit</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'Error'</span><span class="p">)</span>
+
+<span class="n">text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">()</span>
+<span class="n">text</span><span class="o">.</span><span class="n">on_submit</span><span class="p">(</span><span class="n">calc</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code></pre>
+<div class="figure">
+<img alt="Text のサンプルコード" src="./img/Text-sample-out.png"/>
+<p class="caption">Text のサンプルコード</p>
+</div>
+</div>
+<div class="section" id="textarea">
+<h1 class="md_header_block" id="h_articles_jupyterbook_reject03a_rst_Textarea">Textarea</h1>
+<p>複数行を入力できるテキストボックスです。以下のコードでは入力した文字数をカウントした結果を出力します。</p>
+<pre class="code python literal-block"><code><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">Textarea</span>
+
+<span class="k">def</span> <span class="nf">wc</span><span class="p">(</span><span class="n">change</span><span class="p">):</span>
+    <span class="n">clear_output</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">change</span><span class="p">[</span><span class="s1">'new'</span><span class="p">]))</span>
+
+<span class="n">textarea</span> <span class="o">=</span> <span class="n">Textarea</span><span class="p">()</span>
+<span class="n">textarea</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">wc</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">'value'</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">textarea</span><span class="p">)</span></code></pre>
+<div class="figure">
+<img alt="Textarea のサンプルコード" src="./img/Textarea-sample-out.png"/>
+<p class="caption">Textarea のサンプルコード</p>
+</div>
+</div>
+<div class="section" id="label">
+<h1 class="md_header_block" id="h_articles_jupyterbook_reject03a_rst_Label">Label</h1>
+<p>ラベルを表示します。このインスタンスに対して入力は受け付けません。以下のコードでは
+LaTeX 書式にて記述しています。数式の記述については
+<a class="reference external" href="https://www.amazon.co.jp/Python%E3%83%A6%E3%83%BC%E3%82%B6%E3%81%AE%E3%81%9F%E3%82%81%E3%81%AEJupyter-%E5%AE%9F%E8%B7%B5-%E5%85%A5%E9%96%80-%E6%B1%A0%E5%86%85-%E5%AD%9D%E5%95%93/dp/4774192236/ref=as_li_ss_tl?ref_=nav_signin&amp;&amp;linkCode=ll1&amp;tag=eleshis-22&amp;linkId=12c20401ddd3c71f971ac2330621cdd6">書籍</a>
+にて解説します。</p>
+<pre class="code python literal-block"><code><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">Label</span>
+
+<span class="n">Label</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s1">'$E=mc^2$'</span><span class="p">)</span></code></pre>
+<div class="figure">
+<img alt="Label のサンプルコード" src="./img/Label-sample-out.png"/>
+<p class="caption">Label のサンプルコード</p>
+</div>
+</div>
+<div class="section" id="html">
+<h1 class="md_header_block" id="h_articles_jupyterbook_reject03a_rst_HTML">HTML</h1>
+<p>値を HTML として出力します。以下のコードでは簡易的な HTML
+エディタを作成しています。</p>
+<pre class="code python literal-block"><code><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">HTML</span>
+
+<span class="k">def</span> <span class="nf">html_editor</span><span class="p">(</span><span class="n">change</span><span class="p">):</span>
+    <span class="n">html</span><span class="o">.</span><span class="n">value</span><span class="o">=</span><span class="n">change</span><span class="p">[</span><span class="s1">'new'</span><span class="p">]</span>
+
+<span class="n">html</span> <span class="o">=</span> <span class="n">HTML</span><span class="p">()</span>
+<span class="n">textarea</span> <span class="o">=</span> <span class="n">Textarea</span><span class="p">()</span>
+<span class="n">textarea</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">html_editor</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">'value'</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">textarea</span><span class="p">,</span> <span class="n">html</span><span class="p">)</span></code></pre>
+<div class="figure">
+<img alt="HTML のサンプルコード" src="./img/HTML-sample-out.png"/>
+<p class="caption">HTML のサンプルコード</p>
+</div>
+</div>
+<div class="section" id="htmlmath">
+<h1 class="md_header_block" id="h_articles_jupyterbook_reject03a_rst_HTMLMath">HTMLMath</h1>
+<p>値を HTML として出力します。数式を含むことができます。</p>
+<pre class="code python literal-block"><code><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">HTMLMath</span>
+
+<span class="n">HTMLMath</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="s1">'&lt;b&gt;ものすごく&lt;/b&gt;有名な式:&lt;br&gt; $E=mc^2$'</span><span class="p">)</span></code></pre>
+<div class="figure">
+<img alt="HTMLMath のサンプルコード" src="./img/HTMLMath-sample-out.png"/>
+<p class="caption">HTMLMath のサンプルコード</p>
+</div>
+</div>
+<div class="section" id="image">
+<h1 class="md_header_block" id="h_articles_jupyterbook_reject03a_rst_Image">Image</h1>
+<p>画像ファイルを表示します。</p>
+<pre class="code python literal-block"><code><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">urllib.request</span> <span class="kn">import</span> <span class="n">urlopen</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s1">'https://www.python.org/static/img/python-logo.png'</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">Image</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">res</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">width</span><span class="o">=</span><span class="mi">290</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">82</span><span class="p">)</span></code></pre>
+<div class="figure">
+<img alt="Image のサンプルコード" src="./img/Image-sample-out.png"/>
+<p class="caption">Image のサンプルコード</p>
+</div>
+</div>
+<div class="section" id="button">
+<h1 class="md_header_block" id="h_articles_jupyterbook_reject03a_rst_Button">Button</h1>
+<p>ボタンです。ボタンが押された際に、<span class="docutils literal">on_click()</span>
+メソッドがイベントハンドラとなります。以下のコードでは乱数で生成した値を出力しています。</p>
+<pre class="code python literal-block"><code><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">Button</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randint</span>
+
+
+<span class="k">def</span> <span class="nf">omikuji</span><span class="p">(</span><span class="n">submit</span><span class="p">):</span>
+    <span class="n">clear_output</span><span class="p">()</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s1">'ハルヒ'</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">'長門'</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">'朝比奈さん'</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s1">'小泉'</span><span class="p">}</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)])</span>
+
+
+<span class="n">button</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s1">'誰と組む？'</span><span class="p">)</span>
+<span class="n">button</span><span class="o">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">omikuji</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">button</span><span class="p">)</span></code></pre>
+<div class="figure">
+<img alt="Button のサンプルコード" src="./img/Button-sample-out.png"/>
+<p class="caption">Button のサンプルコード</p>
+</div>
+</div>
+<div class="section" id="play">
+<h1 class="md_header_block" id="h_articles_jupyterbook_reject03a_rst_Play">Play</h1>
+<p>アニメーションを制御します。再生、一時停止、停止ボタンが用意されています。以下のコードでは
+<a class="reference external" href="https://www.amazon.co.jp/Python%E3%83%A6%E3%83%BC%E3%82%B6%E3%81%AE%E3%81%9F%E3%82%81%E3%81%AEJupyter-%E5%AE%9F%E8%B7%B5-%E5%85%A5%E9%96%80-%E6%B1%A0%E5%86%85-%E5%AD%9D%E5%95%93/dp/4774192236/ref=as_li_ss_tl?ref_=nav_signin&amp;&amp;linkCode=ll1&amp;tag=eleshis-22&amp;linkId=12c20401ddd3c71f971ac2330621cdd6">書籍の7章</a>
+で紹介したアニメーションをウィジェットで制御しています。</p>
+<pre class="code python literal-block"><code><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">Play</span><span class="p">,</span> <span class="n">Layout</span>
+<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">figure</span>
+<span class="kn">from</span> <span class="nn">bokeh.io</span> <span class="kn">import</span> <span class="n">output_notebook</span><span class="p">,</span> <span class="n">show</span><span class="p">,</span> <span class="n">push_notebook</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">arange</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">pi</span>
+
+<span class="n">output_notebook</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">calc_sin</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">i</span> <span class="o">/</span> <span class="mf">10.0</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">update_graph</span><span class="p">(</span><span class="n">change</span><span class="p">):</span>
+    <span class="n">r</span><span class="o">.</span><span class="n">data_source</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'x'</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">:</span> <span class="n">calc_sin</span><span class="p">(</span><span class="n">change</span><span class="p">[</span><span class="s1">'new'</span><span class="p">])}</span>
+    <span class="n">push_notebook</span><span class="p">(</span><span class="n">handle</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">plot_width</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">calc_sin</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+
+<span class="n">play</span> <span class="o">=</span> <span class="n">Play</span><span class="p">(</span><span class="n">layout</span><span class="o">=</span><span class="n">Layout</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="s1">'20%'</span><span class="p">))</span>
+<span class="n">slider</span> <span class="o">=</span> <span class="n">IntSlider</span><span class="p">()</span>
+<span class="n">play</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">update_graph</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">'value'</span><span class="p">)</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">show</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">notebook_handle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">play</span><span class="p">)</span></code></pre>
+<div class="figure">
+<img alt="Play のサンプルコード" src="./img/Play-sample-out.png"/>
+<p class="caption">Play のサンプルコード</p>
+</div>
+</div>
+<div class="section" id="datepicker">
+<h1 class="md_header_block" id="h_articles_jupyterbook_reject03a_rst_DatePicker">DatePicker</h1>
+<p>カレンダーから日付を入力します。以下のコードでは入力された日付とコンピュータの日付の差分を日数で出力しています。</p>
+<pre class="code python literal-block"><code><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">DatePicker</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+
+<span class="k">def</span> <span class="nf">weekday</span><span class="p">(</span><span class="n">change</span><span class="p">):</span>
+    <span class="n">clear_output</span><span class="p">()</span>
+    <span class="n">days_diff</span> <span class="o">=</span> <span class="p">(</span><span class="n">change</span><span class="p">[</span><span class="s1">'new'</span><span class="p">]</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">date</span><span class="p">())</span><span class="o">.</span><span class="n">days</span>
+    <span class="k">if</span> <span class="n">days_diff</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="si">{}</span><span class="s1">日後'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">days_diff</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="si">{}</span><span class="s1">日前'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">days_diff</span><span class="p">)))</span>
+
+
+<span class="n">date_picker</span> <span class="o">=</span> <span class="n">DatePicker</span><span class="p">()</span>
+<span class="n">date_picker</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">weekday</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">'value'</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">date_picker</span><span class="p">)</span></code></pre>
+<div class="figure">
+<img alt="DatePicker のサンプルコード" src="./img/DatePicker-sample-out.png"/>
+<p class="caption">DatePicker のサンプルコード</p>
+</div>
+</div>
+<div class="section" id="colorpicker">
+<h1 class="md_header_block" id="h_articles_jupyterbook_reject03a_rst_ColorPicker">ColorPicker</h1>
+<p>見本リストから色を選択します。値は16進数のRGB表記です。以下のコードでは選択された色を10進数のRGB表記に変換し、HTML
+で表示しています。</p>
+<pre class="code python literal-block"><code><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">ColorPicker</span><span class="p">,</span> <span class="n">jslink</span>
+
+
+<span class="k">def</span> <span class="nf">change_color</span><span class="p">(</span><span class="n">change</span><span class="p">):</span>
+    <span class="n">color16</span> <span class="o">=</span> <span class="n">change</span><span class="p">[</span><span class="s1">'new'</span><span class="p">]</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">color16</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">color16</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">5</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">color16</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">7</span><span class="p">],</span> <span class="mi">16</span><span class="p">)</span>
+    <span class="n">html_text</span> <span class="o">=</span> <span class="s1">'&lt;font color=</span><span class="si">{0}</span><span class="s1">&gt;R:</span><span class="si">{1}</span><span class="s1">, G:</span><span class="si">{2}</span><span class="s1">, B:</span><span class="si">{3}</span><span class="s1">&lt;/font&gt;'</span>
+    <span class="n">html_text</span> <span class="o">=</span> <span class="n">html_text</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">color16</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    <span class="n">color_text</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">html_text</span>
+
+
+<span class="n">color_picker</span> <span class="o">=</span> <span class="n">ColorPicker</span><span class="p">()</span>
+<span class="n">color_text</span> <span class="o">=</span> <span class="n">HTML</span><span class="p">()</span>
+<span class="n">color_picker</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">change_color</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="s1">'value'</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">color_picker</span><span class="p">,</span> <span class="n">color_text</span><span class="p">)</span></code></pre>
+<div class="figure">
+<img alt="DatePicker のサンプルコード" src="./img/ColorPicker-sample-out.png"/>
+<p class="caption">DatePicker のサンプルコード</p>
+</div>
+</div>
+
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="col-md-3">
+      
+      <div class="article_metadata">
+        
+          <div class="article_date"> 2018-01-19 </div>
+          <hr/>
+        
+        <div class="article_tag_links">
+          
+            <span class="article_tag_link"><a href='../index_tags_tags_python.html' >python</a></span>
+          
+            <span class="article_tag_link"><a href='../index_tags_tags_jupyter.html' >jupyter</a></span>
+          
+            <span class="article_tag_link"><a href='../index_tags_tags_ipywidgets.html' >ipywidgets</a></span>
+          
+            <span class="article_tag_link"><a href='../index_tags_tags_bokeh.html' >bokeh</a></span>
+          
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-9"></div>
+    <div class="col-md-3 copyright">
+      <p class="copyright-text">Copyright  © 2020 driller</p>
+      <p class="copyright-text">Powered by <a href="https://github.com/miyadaiku/miyadaiku">miyadaiku</a></p>
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+
+</body>
+</html>

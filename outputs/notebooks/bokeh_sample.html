@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+   
+   
+  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jupyter Notebookサンプル - drillerの部屋</title>
+  
+
+
+<!-- include docutils5 css -->
+<link rel="stylesheet" href="../static/docutils_html5/minimal.css">
+  <link rel="stylesheet" href="../static/docutils_html5/plain.css">
+
+<!-- include pygments css -->
+<link rel="stylesheet" href="../static/pygments/default.css">
+
+<!-- include boolstrap4 -->
+<link rel="stylesheet" href="../static/bootstrap4/bootstrap.min.css">
+
+<!-- include jquery.js -->
+<script src="../static/jquery/jquery.min.js"></script>
+
+<!-- include popper.js -->
+<script src="../static/popper.js/popper.min.js"></script>
+
+<!-- include boolstrap4 js -->
+<script src="../static/bootstrap4/bootstrap.min.js"></script>
+
+<!-- include font awesome -->
+<script defer src="../static/fontawesome/js/all.min.js"></script>
+  <script defer src="../static/fontawesome/js/v4-shims.min.js"></script>
+
+<!-- include ipynb minimum style -->
+<link rel="stylesheet" href="../static/ipynb/styles/min_ipynb.css">
+
+<link rel="stylesheet" href="../static/css/sample_index_pagenation.css">
+<link href="../static/newblog/ipynb_styles.css" rel="stylesheet">
+
+<!-- Loading mathjax macro -->
+<!-- Load mathjax -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML"></script>
+<!-- MathJax configuration -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+        displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+    },
+    // Center justify equations in code and markdown cells. Elsewhere
+    // we use CSS to left justify single line equations in code cells.
+    displayAlign: 'center',
+    "HTML-CSS": {
+        styles: {'.MathJax_Display': {"margin": 0}},
+        linebreaks: { automatic: true }
+    }
+});
+</script>
+
+<link rel="stylesheet" href="../static/newblog/main.css">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="../static/amx004.png">
+
+
+<link href="https://drillan.github.io/all.atom.xml" type="application/atom+xml" rel="alternate" title="drillerの部屋 Atom Feed" />
+<link href="https://drillan.github.io/channews.rdf" type="application/rss+xml" rel="alternate" title="drillerの部屋 RSS Feed" />
+
+<meta property="og:url" content="https://drillan.github.io/notebooks/bokeh_sample.html" />
+<meta property="og:locale" content="ja" />
+<meta property="og:type" content="article" />
+
+<meta property="og:title" content="Jupyter Notebookサンプル - drillerの部屋" />
+
+<meta name="description" content="どりらんの落書き帳"/>
+<meta property="og:description" content="どりらんの落書き帳" />
+<meta property="og:image" content="https://drillan.github.io/static/amx004.png" />
+<meta property="article:published_time" content="2017-09-02T00:00:00+09:00" />
+
+
+
+
+  <style>
+    .topblock {
+      background-color: #f5f5f5;
+    }
+
+    .topblock h1 {
+      color: #0f0f0f;
+    }
+
+    .navbar {
+      background-color: #6E777C !important;
+    }
+  </style>
+
+</head>
+
+<body>
+   
+<div>
+
+
+<div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="../index.html"
+      >
+      
+        <img src="../static/amx004.png" width="32" height="32"/>
+      
+      drillerの部屋 </a
+    >
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link" href="../about.html">このサイトについて</a>
+      </div>
+    </div>
+  </nav>
+</div>
+
+ 
+
+
+
+<div class="container article_container">
+  <div class="row">
+    <div class="col-md-9">
+
+      
+      <div class="article">
+        
+        <div class="article_title">
+          <h1>
+            Jupyter Notebookサンプル
+          </h1>
+        </div>
+        
+
+        <div class="article_body">
+          <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://miyadaiku.github.io">Miyadaiku</a> では Jupyter Notebook の ipynb ファイルをそのままサイトまたはブログの記事として投稿できます。</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [1]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">figure</span><span class="p">,</span> <span class="n">output_notebook</span><span class="p">,</span> <span class="n">show</span>
+
+<span class="n">output_notebook</span><span class="p">()</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">plot_width</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">p</span><span class="o">.</span><span class="n">line</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">show</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_html rendered_html output_subarea">
+<div class="bk-root">
+<a class="bk-logo bk-logo-small bk-logo-notebook" href="https://bokeh.org" target="_blank"></a>
+<span id="1001">Loading BokehJS ...</span>
+</div>
+</div>
+</div>
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_javascript" id="9c6a4248-2461-4545-abfb-184b65c4967d">
+<script type="text/javascript">
+var element = $('#9c6a4248-2461-4545-abfb-184b65c4967d');
+
+(function(root) &#123;
+  function now() &#123;
+    return new Date();
+  &#125;
+
+  var force = true;
+
+  if (typeof root._bokeh_onload_callbacks === "undefined" || force === true) &#123;
+    root._bokeh_onload_callbacks = [];
+    root._bokeh_is_loading = undefined;
+  &#125;
+
+  var JS_MIME_TYPE = 'application/javascript';
+  var HTML_MIME_TYPE = 'text/html';
+  var EXEC_MIME_TYPE = 'application/vnd.bokehjs_exec.v0+json';
+  var CLASS_NAME = 'output_bokeh rendered_html';
+
+  /**
+   * Render data to the DOM node
+   */
+  function render(props, node) &#123;
+    var script = document.createElement("script");
+    node.appendChild(script);
+  &#125;
+
+  /**
+   * Handle when an output is cleared or removed
+   */
+  function handleClearOutput(event, handle) &#123;
+    var cell = handle.cell;
+
+    var id = cell.output_area._bokeh_element_id;
+    var server_id = cell.output_area._bokeh_server_id;
+    // Clean up Bokeh references
+    if (id != null && id in Bokeh.index) &#123;
+      Bokeh.index[id].model.document.clear();
+      delete Bokeh.index[id];
+    &#125;
+
+    if (server_id !== undefined) &#123;
+      // Clean up Bokeh references
+      var cmd = "from bokeh.io.state import curstate; print(curstate().uuid_to_server['" + server_id + "'].get_sessions()[0].document.roots[0]._id)";
+      cell.notebook.kernel.execute(cmd, &#123;
+        iopub: &#123;
+          output: function(msg) &#123;
+            var id = msg.content.text.trim();
+            if (id in Bokeh.index) &#123;
+              Bokeh.index[id].model.document.clear();
+              delete Bokeh.index[id];
+            &#125;
+          &#125;
+        &#125;
+      &#125;);
+      // Destroy server and session
+      var cmd = "import bokeh.io.notebook as ion; ion.destroy_server('" + server_id + "')";
+      cell.notebook.kernel.execute(cmd);
+    &#125;
+  &#125;
+
+  /**
+   * Handle when a new output is added
+   */
+  function handleAddOutput(event, handle) &#123;
+    var output_area = handle.output_area;
+    var output = handle.output;
+
+    // limit handleAddOutput to display_data with EXEC_MIME_TYPE content only
+    if ((output.output_type != "display_data") || (!output.data.hasOwnProperty(EXEC_MIME_TYPE))) &#123;
+      return
+    &#125;
+
+    var toinsert = output_area.element.find("." + CLASS_NAME.split(' ')[0]);
+
+    if (output.metadata[EXEC_MIME_TYPE]["id"] !== undefined) &#123;
+      toinsert[toinsert.length - 1].firstChild.textContent = output.data[JS_MIME_TYPE];
+      // store reference to embed id on output_area
+      output_area._bokeh_element_id = output.metadata[EXEC_MIME_TYPE]["id"];
+    &#125;
+    if (output.metadata[EXEC_MIME_TYPE]["server_id"] !== undefined) &#123;
+      var bk_div = document.createElement("div");
+      bk_div.innerHTML = output.data[HTML_MIME_TYPE];
+      var script_attrs = bk_div.children[0].attributes;
+      for (var i = 0; i < script_attrs.length; i++) &#123;
+        toinsert[toinsert.length - 1].firstChild.setAttribute(script_attrs[i].name, script_attrs[i].value);
+        toinsert[toinsert.length - 1].firstChild.textContent = bk_div.children[0].textContent
+      &#125;
+      // store reference to server id on output_area
+      output_area._bokeh_server_id = output.metadata[EXEC_MIME_TYPE]["server_id"];
+    &#125;
+  &#125;
+
+  function register_renderer(events, OutputArea) &#123;
+
+    function append_mime(data, metadata, element) &#123;
+      // create a DOM node to render to
+      var toinsert = this.create_output_subarea(
+        metadata,
+        CLASS_NAME,
+        EXEC_MIME_TYPE
+      );
+      this.keyboard_manager.register_events(toinsert);
+      // Render to node
+      var props = &#123;data: data, metadata: metadata[EXEC_MIME_TYPE]&#125;;
+      render(props, toinsert[toinsert.length - 1]);
+      element.append(toinsert);
+      return toinsert
+    &#125;
+
+    /* Handle when an output is cleared or removed */
+    events.on('clear_output.CodeCell', handleClearOutput);
+    events.on('delete.Cell', handleClearOutput);
+
+    /* Handle when a new output is added */
+    events.on('output_added.OutputArea', handleAddOutput);
+
+    /**
+     * Register the mime type and append_mime function with output_area
+     */
+    OutputArea.prototype.register_mime_type(EXEC_MIME_TYPE, append_mime, &#123;
+      /* Is output safe? */
+      safe: true,
+      /* Index of renderer in `output_area.display_order` */
+      index: 0
+    &#125;);
+  &#125;
+
+  // register the mime type if in Jupyter Notebook environment and previously unregistered
+  if (root.Jupyter !== undefined) &#123;
+    var events = require('base/js/events');
+    var OutputArea = require('notebook/js/outputarea').OutputArea;
+
+    if (OutputArea.prototype.mime_types().indexOf(EXEC_MIME_TYPE) == -1) &#123;
+      register_renderer(events, OutputArea);
+    &#125;
+  &#125;
+
+  
+  if (typeof (root._bokeh_timeout) === "undefined" || force === true) &#123;
+    root._bokeh_timeout = Date.now() + 5000;
+    root._bokeh_failed_load = false;
+  &#125;
+
+  var NB_LOAD_WARNING = &#123;'data': &#123;'text/html':
+     "<div style='background-color: #fdd'>\n"+
+     "<p>\n"+
+     "BokehJS does not appear to have successfully loaded. If loading BokehJS from CDN, this \n"+
+     "may be due to a slow or bad network connection. Possible fixes:\n"+
+     "</p>\n"+
+     "<ul>\n"+
+     "<li>re-rerun `output_notebook()` to attempt to load from CDN again, or</li>\n"+
+     "<li>use INLINE resources instead, as so:</li>\n"+
+     "</ul>\n"+
+     "<code>\n"+
+     "from bokeh.resources import INLINE\n"+
+     "output_notebook(resources=INLINE)\n"+
+     "</code>\n"+
+     "</div>"&#125;&#125;;
+
+  function display_loaded() &#123;
+    var el = document.getElementById("1001");
+    if (el != null) &#123;
+      el.textContent = "BokehJS is loading...";
+    &#125;
+    if (root.Bokeh !== undefined) &#123;
+      if (el != null) &#123;
+        el.textContent = "BokehJS " + root.Bokeh.version + " successfully loaded.";
+      &#125;
+    &#125; else if (Date.now() < root._bokeh_timeout) &#123;
+      setTimeout(display_loaded, 100)
+    &#125;
+  &#125;
+
+
+  function run_callbacks() &#123;
+    try &#123;
+      root._bokeh_onload_callbacks.forEach(function(callback) &#123;
+        if (callback != null)
+          callback();
+      &#125;);
+    &#125; finally &#123;
+      delete root._bokeh_onload_callbacks
+    &#125;
+    console.debug("Bokeh: all callbacks have finished");
+  &#125;
+
+  function load_libs(css_urls, js_urls, callback) &#123;
+    if (css_urls == null) css_urls = [];
+    if (js_urls == null) js_urls = [];
+
+    root._bokeh_onload_callbacks.push(callback);
+    if (root._bokeh_is_loading > 0) &#123;
+      console.debug("Bokeh: BokehJS is being loaded, scheduling callback at", now());
+      return null;
+    &#125;
+    if (js_urls == null || js_urls.length === 0) &#123;
+      run_callbacks();
+      return null;
+    &#125;
+    console.debug("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
+    root._bokeh_is_loading = css_urls.length + js_urls.length;
+
+    function on_load() &#123;
+      root._bokeh_is_loading--;
+      if (root._bokeh_is_loading === 0) &#123;
+        console.debug("Bokeh: all BokehJS libraries/stylesheets loaded");
+        run_callbacks()
+      &#125;
+    &#125;
+
+    function on_error() &#123;
+      console.error("failed to load " + url);
+    &#125;
+
+    for (var i = 0; i < css_urls.length; i++) &#123;
+      var url = css_urls[i];
+      const element = document.createElement("link");
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.rel = "stylesheet";
+      element.type = "text/css";
+      element.href = url;
+      console.debug("Bokeh: injecting link tag for BokehJS stylesheet: ", url);
+      document.body.appendChild(element);
+    &#125;
+
+    const hashes = &#123;"https://cdn.bokeh.org/bokeh/release/bokeh-2.2.3.min.js": "T2yuo9Oe71Cz/I4X9Ac5+gpEa5a8PpJCDlqKYO0CfAuEszu1JrXLl8YugMqYe3sM", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.2.3.min.js": "98GDGJ0kOMCUMUePhksaQ/GYgB3+NH9h996V88sh3aOiUNX3N+fLXAtry6xctSZ6", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.2.3.min.js": "89bArO+nlbP3sgakeHjCo1JYxYR5wufVgA3IbUvDY+K7w4zyxJqssu7wVnfeKCq8"&#125;;
+
+    for (var i = 0; i < js_urls.length; i++) &#123;
+      var url = js_urls[i];
+      var element = document.createElement('script');
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.async = false;
+      element.src = url;
+      if (url in hashes) &#123;
+        element.crossOrigin = "anonymous";
+        element.integrity = "sha384-" + hashes[url];
+      &#125;
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.head.appendChild(element);
+    &#125;
+  &#125;;
+
+  function inject_raw_css(css) &#123;
+    const element = document.createElement("style");
+    element.appendChild(document.createTextNode(css));
+    document.body.appendChild(element);
+  &#125;
+
+  
+  var js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-2.2.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.2.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.2.3.min.js"];
+  var css_urls = [];
+  
+
+  var inline_js = [
+    function(Bokeh) &#123;
+      Bokeh.set_log_level("info");
+    &#125;,
+    function(Bokeh) &#123;
+    
+    
+    &#125;
+  ];
+
+  function run_inline_js() &#123;
+    
+    if (root.Bokeh !== undefined || force === true) &#123;
+      
+    for (var i = 0; i < inline_js.length; i++) &#123;
+      inline_js[i].call(root, root.Bokeh);
+    &#125;
+    if (force === true) &#123;
+        display_loaded();
+      &#125;&#125; else if (Date.now() < root._bokeh_timeout) &#123;
+      setTimeout(run_inline_js, 100);
+    &#125; else if (!root._bokeh_failed_load) &#123;
+      console.log("Bokeh: BokehJS failed to load within specified timeout.");
+      root._bokeh_failed_load = true;
+    &#125; else if (force !== true) &#123;
+      var cell = $(document.getElementById("1001")).parents('.cell').data().cell;
+      cell.output_area.append_execute_result(NB_LOAD_WARNING)
+    &#125;
+
+  &#125;
+
+  if (root._bokeh_is_loading === 0) &#123;
+    console.debug("Bokeh: BokehJS loaded, going straight to plotting");
+    run_inline_js();
+  &#125; else &#123;
+    load_libs(css_urls, js_urls, function() &#123;
+      console.debug("Bokeh: BokehJS plotting callback run at", now());
+      run_inline_js();
+    &#125;);
+  &#125;
+&#125;(window));
+</script>
+</div>
+</div>
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_html rendered_html output_subarea">
+<div class="bk-root" data-root-id="1002" id="3c8a44af-106c-4f67-94b2-3f82398bc89e"></div>
+</div>
+</div>
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_javascript" id="d939257e-1515-4159-857b-ba6154636b0d">
+<script type="text/javascript">
+var element = $('#d939257e-1515-4159-857b-ba6154636b0d');
+(function(root) &#123;
+  function embed_document(root) &#123;
+    
+  var docs_json = &#123;"e3a414c0-ab6b-4ce3-828a-798f5eb5bfcc":&#123;"roots":&#123;"references":[&#123;"attributes":&#123;"below":[&#123;"id":"1011"&#125;],"center":[&#123;"id":"1014"&#125;,&#123;"id":"1018"&#125;],"left":[&#123;"id":"1015"&#125;],"plot_height":200,"plot_width":200,"renderers":[&#123;"id":"1036"&#125;],"title":&#123;"id":"1038"&#125;,"toolbar":&#123;"id":"1026"&#125;,"x_range":&#123;"id":"1003"&#125;,"x_scale":&#123;"id":"1007"&#125;,"y_range":&#123;"id":"1005"&#125;,"y_scale":&#123;"id":"1009"&#125;&#125;,"id":"1002","subtype":"Figure","type":"Plot"&#125;,&#123;"attributes":&#123;&#125;,"id":"1009","type":"LinearScale"&#125;,&#123;"attributes":&#123;"formatter":&#123;"id":"1041"&#125;,"ticker":&#123;"id":"1012"&#125;&#125;,"id":"1011","type":"LinearAxis"&#125;,&#123;"attributes":&#123;"axis":&#123;"id":"1011"&#125;,"ticker":null&#125;,"id":"1014","type":"Grid"&#125;,&#123;"attributes":&#123;"formatter":&#123;"id":"1043"&#125;,"ticker":&#123;"id":"1016"&#125;&#125;,"id":"1015","type":"LinearAxis"&#125;,&#123;"attributes":&#123;&#125;,"id":"1012","type":"BasicTicker"&#125;,&#123;"attributes":&#123;"axis":&#123;"id":"1015"&#125;,"dimension":1,"ticker":null&#125;,"id":"1018","type":"Grid"&#125;,&#123;"attributes":&#123;&#125;,"id":"1016","type":"BasicTicker"&#125;,&#123;"attributes":&#123;"overlay":&#123;"id":"1025"&#125;&#125;,"id":"1021","type":"BoxZoomTool"&#125;,&#123;"attributes":&#123;&#125;,"id":"1024","type":"HelpTool"&#125;,&#123;"attributes":&#123;"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[&#123;"id":"1019"&#125;,&#123;"id":"1020"&#125;,&#123;"id":"1021"&#125;,&#123;"id":"1022"&#125;,&#123;"id":"1023"&#125;,&#123;"id":"1024"&#125;]&#125;,"id":"1026","type":"Toolbar"&#125;,&#123;"attributes":&#123;&#125;,"id":"1043","type":"BasicTickFormatter"&#125;,&#123;"attributes":&#123;&#125;,"id":"1019","type":"PanTool"&#125;,&#123;"attributes":&#123;"data":&#123;"x":[1,2,3],"y":[3,2,1]&#125;,"selected":&#123;"id":"1045"&#125;,"selection_policy":&#123;"id":"1044"&#125;&#125;,"id":"1033","type":"ColumnDataSource"&#125;,&#123;"attributes":&#123;&#125;,"id":"1020","type":"WheelZoomTool"&#125;,&#123;"attributes":&#123;"line_alpha":0.1,"line_color":"#1f77b4","x":&#123;"field":"x"&#125;,"y":&#123;"field":"y"&#125;&#125;,"id":"1035","type":"Line"&#125;,&#123;"attributes":&#123;&#125;,"id":"1022","type":"SaveTool"&#125;,&#123;"attributes":&#123;&#125;,"id":"1023","type":"ResetTool"&#125;,&#123;"attributes":&#123;"line_color":"#1f77b4","x":&#123;"field":"x"&#125;,"y":&#123;"field":"y"&#125;&#125;,"id":"1034","type":"Line"&#125;,&#123;"attributes":&#123;"source":&#123;"id":"1033"&#125;&#125;,"id":"1037","type":"CDSView"&#125;,&#123;"attributes":&#123;"data_source":&#123;"id":"1033"&#125;,"glyph":&#123;"id":"1034"&#125;,"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":&#123;"id":"1035"&#125;,"selection_glyph":null,"view":&#123;"id":"1037"&#125;&#125;,"id":"1036","type":"GlyphRenderer"&#125;,&#123;"attributes":&#123;&#125;,"id":"1044","type":"UnionRenderers"&#125;,&#123;"attributes":&#123;"text":""&#125;,"id":"1038","type":"Title"&#125;,&#123;"attributes":&#123;&#125;,"id":"1045","type":"Selection"&#125;,&#123;"attributes":&#123;"bottom_units":"screen","fill_alpha":0.5,"fill_color":"lightgrey","left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"right_units":"screen","top_units":"screen"&#125;,"id":"1025","type":"BoxAnnotation"&#125;,&#123;"attributes":&#123;&#125;,"id":"1003","type":"DataRange1d"&#125;,&#123;"attributes":&#123;&#125;,"id":"1007","type":"LinearScale"&#125;,&#123;"attributes":&#123;&#125;,"id":"1005","type":"DataRange1d"&#125;,&#123;"attributes":&#123;&#125;,"id":"1041","type":"BasicTickFormatter"&#125;],"root_ids":["1002"]&#125;,"title":"Bokeh Application","version":"2.2.3"&#125;&#125;;
+  var render_items = [&#123;"docid":"e3a414c0-ab6b-4ce3-828a-798f5eb5bfcc","root_ids":["1002"],"roots":&#123;"1002":"3c8a44af-106c-4f67-94b2-3f82398bc89e"&#125;&#125;];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+
+  &#125;
+  if (root.Bokeh !== undefined) &#123;
+    embed_document(root);
+  &#125; else &#123;
+    var attempts = 0;
+    var timer = setInterval(function(root) &#123;
+      if (root.Bokeh !== undefined) &#123;
+        clearInterval(timer);
+        embed_document(root);
+      &#125; else &#123;
+        attempts++;
+        if (attempts > 100) &#123;
+          clearInterval(timer);
+          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+        &#125;
+      &#125;
+    &#125;, 10, root)
+  &#125;
+&#125;)(window);
+</script>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>このようにJSが必要なnotebookもレンダリングされています。</p>
+<p>やり方は非常に簡単で <a href="https://miyadaiku.github.io/ja/guide/article.html#h_ja_guide_article_2erst_12">公式ドキュメント</a> に記載されているとおりです。</p>
+</div>
+</div>
+</div>
+
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="col-md-3">
+      
+      <div class="article_metadata">
+        
+          <div class="article_date"> 2017-09-02 </div>
+          <hr/>
+        
+        <div class="article_tag_links">
+          
+            <span class="article_tag_link"><a href='../index_tags_tags_jupyter.html' >jupyter</a></span>
+          
+            <span class="article_tag_link"><a href='../index_tags_tags_bokeh.html' >bokeh</a></span>
+          
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-9"></div>
+    <div class="col-md-3 copyright">
+      <p class="copyright-text">Copyright  © 2020 driller</p>
+      <p class="copyright-text">Powered by <a href="https://github.com/miyadaiku/miyadaiku">miyadaiku</a></p>
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+
+</body>
+</html>
