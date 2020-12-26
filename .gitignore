@@ -1,3 +1,4 @@
 outputs
 _*.pickle
 _*.db
+.ipynb_checkpoints
